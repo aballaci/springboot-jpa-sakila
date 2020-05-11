@@ -1,0 +1,14 @@
+version: '3.7'
+services:
+  mysql-server:
+    image: aballaci/mysql-5.7-sakila
+    command: --default-authentication-plugin=mysql_native_password
+    volumes:
+        - "./.mysql-data/db:/var/lib/mysql"
+    restart: always
+    ports:
+      - 3306:3306
+    expose:
+      - 3306
+    environment:
+      MYSQL_ROOT_PASSWORD: sakila
