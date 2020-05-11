@@ -3,6 +3,10 @@ package de.ballaci.jpa.domain;
 import javax.persistence.*;
 import java.io.Serializable;
 
+/**
+ * @author Armand.Ballaci
+ */
+
 @Entity
 @Table(name = "ACTOR_INFO")
 public class ActorInfo implements Serializable {

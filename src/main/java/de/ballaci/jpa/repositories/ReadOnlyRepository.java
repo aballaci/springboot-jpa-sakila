@@ -11,6 +11,8 @@ import java.io.Serializable;
 import java.util.Optional;
 
 /**
+ * @author Armand.Ballaci
+ *
  * Interface for Read-Only Query Repositories
  *
  * @param <T> the Domain Entity Type

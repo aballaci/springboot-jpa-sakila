@@ -3,6 +3,10 @@ package de.ballaci.jpa.domain;
 import java.io.Serializable;
 import java.util.stream.Stream;
 
+/**
+ * @author Armand.Ballaci
+ */
+
 public enum SpecialFeature implements Serializable {
 
     Trailers("Trailers"),

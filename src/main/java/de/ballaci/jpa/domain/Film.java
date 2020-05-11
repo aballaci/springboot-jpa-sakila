@@ -8,6 +8,7 @@ import java.util.Date;
 import java.util.Set;
 
 /**
+ * @author Armand.Ballaci
  *
  * Table "film"
  * CREATE TABLE film (

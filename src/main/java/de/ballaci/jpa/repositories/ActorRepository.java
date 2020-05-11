@@ -8,6 +8,8 @@ import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 import java.util.List;
 
 /**
+ * @author Armand.Ballaci
+ *
  * Accessing JPA Data with REST
  * {@link "https://spring.io/guides/gs/accessing-data-rest/" }
  */

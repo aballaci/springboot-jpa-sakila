@@ -5,6 +5,8 @@ import java.io.Serializable;
 import java.util.Date;
 
 /**
+ * @author Armand.Ballaci
+ *
  * Table "actor"
  *
  * CREATE TABLE actor (

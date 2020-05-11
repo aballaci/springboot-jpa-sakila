@@ -9,6 +9,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+/**
+ * @author Armand.Ballaci
+ */
+
 @Transactional(readOnly = true)
 @RepositoryRestResource(collectionResourceRel = "actorinfo", path = "actorinfo")
 public interface ActorInfoViewRepository extends JpaRepository<ActorInfo, Long> {

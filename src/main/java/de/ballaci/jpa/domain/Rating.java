@@ -6,6 +6,8 @@ import java.io.Serializable;
 import java.util.stream.Stream;
 
 /**
+ * @author Armand.Ballaci
+ *
  * https://www.baeldung.com/jackson-serialize-enums
  * Enum as JSON Object
  * Starting with Jackson 2.1.2, there is now a configuration option that can handle this kind of representation.
