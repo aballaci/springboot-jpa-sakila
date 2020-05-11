@@ -1,8 +1,9 @@
 package de.ballaci.jpa.domain;
 
+import java.io.Serializable;
 import java.util.stream.Stream;
 
-public enum SpecialFeature {
+public enum SpecialFeature implements Serializable {
 
     Trailers("Trailers"),
     Commentaries("Commentaries"),
@@ -15,7 +16,7 @@ public enum SpecialFeature {
         return specialFeature;
     }
 
-    private SpecialFeature(String specialFeature){
+    private SpecialFeature(String specialFeature) {
         this.specialFeature = specialFeature;
     }
 

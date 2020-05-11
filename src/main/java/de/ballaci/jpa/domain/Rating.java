@@ -2,6 +2,7 @@ package de.ballaci.jpa.domain;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
+import java.io.Serializable;
 import java.util.stream.Stream;
 
 /**
@@ -10,11 +11,11 @@ import java.util.stream.Stream;
  * Starting with Jackson 2.1.2, there is now a configuration option that can handle this kind of representation.
  * This can be done via the @JsonFormat annotation at the class level
  * It would print "PG-13" instead of PG_13.
- *
+ * <p>
  * rating               ENUM('G','PG','PG-13','R','NC-17') DEFAULT 'G',
  */
 @JsonFormat(shape = JsonFormat.Shape.OBJECT)
-public enum Rating {
+public enum Rating implements Serializable {
     G("G"),
     PG("PG"),
     PG_13("PG-13"),

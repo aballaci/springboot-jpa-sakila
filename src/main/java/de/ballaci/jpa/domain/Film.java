@@ -3,6 +3,7 @@ package de.ballaci.jpa.domain;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Date;
 import java.util.Set;
 
@@ -50,7 +51,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "FILM")
-public class Film {
+public class Film implements Serializable {
 
     @Id
     @Column(name="FILM_ID")

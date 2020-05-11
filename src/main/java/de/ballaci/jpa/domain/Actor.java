@@ -1,6 +1,7 @@
 package de.ballaci.jpa.domain;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -27,7 +28,7 @@ import java.util.Date;
 
 @Entity
 @Table(name = "ACTOR")
-public class Actor {
+public class Actor implements Serializable {
     @Id
     @Column(name = "ACTOR_ID")
     @GeneratedValue(strategy = GenerationType.AUTO)
