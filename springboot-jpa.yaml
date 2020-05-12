@@ -1,0 +1,90 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: mysql
+spec:
+  clusterIP: None
+  ports:
+    - name: mysql
+      port: 3306
+  selector:
+    app: mysql
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: mysql
+spec:
+  selector:
+    matchLabels:
+      app: mysql
+  serviceName: mysql
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: mysql
+    spec:
+      containers:
+        - name: mysql
+          image: aballaci/mysql-5.7-sakila:latest
+          env:
+            - name: MYSQL_ROOT_PASSWORD
+              value: sakila
+          livenessProbe:
+            exec:
+              command: ["mysqladmin", "ping"]
+            initialDelaySeconds: 30
+            periodSeconds: 10
+            timeoutSeconds: 5
+          readinessProbe:
+            exec:
+              # Check we can execute queries over TCP (skip-networking is off).
+              command: ["mysql", "-h", "127.0.0.1", "-psakila", "-e", "SELECT 1"]
+            initialDelaySeconds: 5
+            periodSeconds: 2
+            timeoutSeconds: 1
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: springboot-jpa
+  labels:
+    app: springboot
+spec:
+  type: NodePort
+  ports:
+  - port: 8080
+  selector:
+    app: springboot
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: springboot
+spec:
+  selector:
+    matchLabels:
+      app: springboot
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: springboot
+    spec:
+      containers:
+      - name: springboot-jpa
+        image: aballaci/springboot-sakila-jpa:v1
+        resources:
+          requests:
+            cpu: 100m
+            memory: 100Mi
+        env:
+          - name: MYSQL_HOST
+            value: mysql
+        ports:
+        - containerPort: 8080
+      initContainers:
+        - name: init-mysql
+          image: busybox
+          command: ['sh', '-c', 'until nslookup mysql; do echo waiting for mysql; sleep 2; done;']
