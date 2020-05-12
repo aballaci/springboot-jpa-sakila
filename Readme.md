@@ -4,7 +4,7 @@
 
 run in kubernetes:
 
-# kubectl apply -f springboot-jpa.yaml
+<code> kubectl apply -f springboot-jpa.yaml </code>
 
 check that is running:
 
