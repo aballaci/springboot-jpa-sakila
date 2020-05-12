@@ -1,6 +1,15 @@
 # Spring Boot JPA 
 A Spring Cloud Docker - Kubernetes Example
 
+## Built With
+
+* [SpringBoot](https://spring.io/projects/spring-boot) - The framework used
+* [Maven](https://maven.apache.org/) - Dependency Management
+* [Docker](https://www.docker.com/) - Used containerise the application
+* [Kubernetes](https://kubernetes.io/) - Used to generate a scalable cloud microservice
+* [DB Documentation](https://www.ntu.edu.sg/home/ehchua/programming/sql/sampledatabases.html) - MySQL's Sample Salika (DVD Rental) Database
+
+
 ## Getting Started
 
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
@@ -37,10 +46,11 @@ Explain how to run the automated tests for this system
 
 Explain what these tests test and why
 
-* [Actors](http://localhost:<port>/actors)
-* [Films](http://localhost:<port>/film) 
-* [Actorinfo](http://localhost:<port>/actorinfo) 
-* [Custom Query](http://localhost:<port>/actorinfo/search/findByActorsLastName?name=GUINESS)
+
+* [Actors](http://localhost:31449/actors) - http://localhost:{port}/actors
+* [Films](http://localhost:31449/film) - http://localhost:{port}/film
+* [Actorinfo](http://localhost:31449/actorinfo) - http://localhost:{port}/actorinfo
+* [Custom Query](http://localhost:31449/actorinfo/search/findByActorsLastName?name=GUINESS) - http://localhost:{port}/actorinfo/search/findByActorsLastName?name=GUINESS
 
 ### And coding style tests
 
@@ -54,13 +64,6 @@ Give an example
 
 Add additional notes about how to deploy this on a live system
 
-## Built With
-
-* [SpringBoot](http://www.dropwizard.io/1.0.2/docs/) - The web framework used
-* [Maven](https://maven.apache.org/) - Dependency Management
-* [Docker](https://rometools.github.io/rome/) - Used to generate RSS Feeds
-* [Kubernetes](https://rometools.github.io/rome/) - Used to generate RSS Feeds
-* [DB Documentation](https://www.ntu.edu.sg/home/ehchua/programming/sql/sampledatabases.html) - MySQL's Sample Salika (DVD Rental) Database
 
 ## Versioning
 
