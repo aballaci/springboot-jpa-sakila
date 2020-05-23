@@ -10,7 +10,7 @@ kind: Service
 metadata:
   name: mysql
 spec:
-  clusterIP: None
+  type: NodePort
   ports:
     - name: mysql
       port: 3306
