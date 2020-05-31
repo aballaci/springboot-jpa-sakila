@@ -893,7 +893,7 @@ server:
     loadBalancerSourceRanges: []
     servicePort: 80
     sessionAffinity: None
-    type: ClusterIP
+    type: NodePort
 
     ## Enable gRPC port on service to allow auto discovery with thanos-querier
     gRPC:
@@ -1172,7 +1172,10 @@ serverFiles:
         static_configs:
           - targets:
             - localhost:9090
-
+      - job_name: 'springboot-app'
+        metrics_path: '/actuator/prometheus'
+        static_configs:
+        - targets: ['springboot-jpa:8080']
       # A scrape configuration for running Prometheus on a Kubernetes cluster.
       # This uses separate scrape configs for cluster components (i.e. API server, node)
       # and services to allow each to use different authentication configs.

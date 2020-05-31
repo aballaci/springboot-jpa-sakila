@@ -15,7 +15,7 @@ global:
 image:
   registry: docker.io
   repository: bitnami/postgresql
-  tag: 11.8.0-debian-10-r11
+  tag: 11.7.0-debian-10-r9
   ## Specify a imagePullPolicy
   ## Defaults to 'Always' if image tag is 'latest', else set to 'IfNotPresent'
   ## ref: http://kubernetes.io/docs/user-guide/images/#pre-pulling-images
@@ -79,7 +79,6 @@ volumePermissions:
 ##
 # schedulerName:
 
-
 ## Pod Security Context
 ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/
 ##
@@ -95,27 +94,17 @@ serviceAccount:
   ## Name of an already existing service account. Setting this value disables the automatic service account creation.
   # name:
 
-## Pod Security Policy
-## ref: https://kubernetes.io/docs/concepts/policy/pod-security-policy/
-psp:
-  create: false
-
-## Creates role for ServiceAccount
-## Required for PSP
-rbac:
-  create: false
-
 replication:
-  enabled: false
+  enabled: true
   user: repl_user
   password: repl_password
-  slaveReplicas: 1
+  slaveReplicas: 2
   ## Set synchronous commit mode: on, off, remote_apply, remote_write and local
   ## ref: https://www.postgresql.org/docs/9.6/runtime-config-wal.html#GUC-WAL-LEVEL
-  synchronousCommit: "off"
+  synchronousCommit: "on"
   ## From the number of `slaveReplicas` defined above, set the number of those that will have synchronous replication
   ## NOTE: It cannot be > slaveReplicas
-  numSynchronousReplicas: 0
+  numSynchronousReplicas: 1
   ## Replication Cluster application name. Useful for defining multiple replication policies
   applicationName: my_application
 
@@ -211,6 +200,10 @@ extraEnv: []
 #      #!/bin/sh
 #      echo "Do something."
 
+## Specify the PostgreSQL username and password to execute the initdb scripts
+# initdbUser:
+# initdbPassword:
+
 ## ConfigMap with scripts to be run at first boot
 ## NOTE: This will override initdbScripts
 # initdbScriptsConfigMap:
@@ -218,10 +211,6 @@ extraEnv: []
 ## Secret with scripts to be run at first boot (in case it contains sensitive information)
 ## NOTE: This can work along initdbScripts or initdbScriptsConfigMap
 # initdbScriptsSecret:
-
-## Specify the PostgreSQL username and password to execute the initdb scripts
-# initdbUser:
-# initdbPassword:
 
 ## Optional duration in seconds the pod needs to terminate gracefully.
 ## ref: https://kubernetes.io/docs/concepts/workloads/pods/pod/#termination-of-pods
@@ -257,15 +246,15 @@ service:
   ##
   # nodePort:
 
-  ## Provide any additional annotations which may be required. Evaluated as a template.
-  ##
+  ## Provide any additional annotations which may be required.
+  ## The value is evaluated as a template, so, for example, the value can depend on .Release or .Chart
   annotations: {}
   ## Set the LoadBalancer service type to internal only.
   ## ref: https://kubernetes.io/docs/concepts/services-networking/service/#internal-load-balancer
   ##
   # loadBalancerIP:
 
-  ## Load Balancer sources. Evaluated as a template.
+  ## Load Balancer sources
   ## https://kubernetes.io/docs/tasks/access-application-cluster/configure-cloud-provider-firewall/#restrict-access-for-loadbalancer-service
   ##
   # loadBalancerSourceRanges:
@@ -342,15 +331,6 @@ master:
   podLabels: {}
   podAnnotations: {}
   priorityClassName: ""
-  ## Extra init containers
-  ## Example
-  ##
-  ## extraInitContainers:
-  ##   - name: do-something
-  ##     image: busybox
-  ##     command: ['do', 'something']
-  extraInitContainers: []
-
   ## Additional PostgreSQL Master Volume mounts
   ##
   extraVolumeMounts: []
@@ -368,13 +348,6 @@ master:
   ##       - name: portname
   ##         containerPort: 1234
   sidecars: []
-
-  ## Override the service configuration for master
-  ##
-  service: {}
-  # type:
-  # nodePort:
-  # clusterIP:
 
 ##
 ## PostgreSQL Slave parameters
@@ -415,13 +388,6 @@ slave:
   ##         containerPort: 1234
   sidecars: []
 
-  ## Override the service configuration for slave
-  ##
-  service: {}
-  # type:
-  # nodePort:
-  # clusterIP:
-
 ## Configure resource requests and limits
 ## ref: http://kubernetes.io/docs/user-guide/compute-resources/
 ##
@@ -429,10 +395,6 @@ resources:
   requests:
     memory: 256Mi
     cpu: 250m
-
-## Add annotations to all the deployed resources
-##
-commonAnnotations: {}
 
 networkPolicy:
   ## Enable creation of NetworkPolicy resources. Only Ingress traffic is filtered for now.
@@ -451,13 +413,11 @@ networkPolicy:
   ## But sometimes, we want the DB to be accessible to clients from other namespaces, in this case, we can use this
   ## LabelSelector to select these namespaces, note that the networkPolicy's namespace should also be explicitly added.
   ##
-  ## Example:
-  ## explicitNamespacesSelector:
-  ##   matchLabels:
-  ##     role: frontend
-  ##   matchExpressions:
-  ##    - {key: role, operator: In, values: [frontend]}
-  explicitNamespacesSelector: {}
+  # explicitNamespacesSelector:
+    # matchLabels:
+      # role: frontend
+    # matchExpressions:
+      # - {key: role, operator: In, values: [frontend]}
 
 ## Configure extra options for liveness and readiness probes
 ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-probes/#configure-probes)
@@ -480,7 +440,7 @@ readinessProbe:
 ## Configure metrics exporter
 ##
 metrics:
-  enabled: false
+  enabled: true
   # resources: {}
   service:
     type: ClusterIP
@@ -501,23 +461,21 @@ metrics:
     enabled: false
     additionalLabels: {}
     namespace: ""
-    ## These are just examples rules, please adapt them to your needs.
-    ## Make sure to constraint the rules to the current postgresql service.
-    ## rules:
-    ##   - alert: HugeReplicationLag
-    ##     expr: pg_replication_lag{service="{{ template "postgresql.fullname" . }}-metrics"} / 3600 > 1
-    ##     for: 1m
-    ##     labels:
-    ##       severity: critical
-    ##     annotations:
-    ##       description: replication for {{ template "postgresql.fullname" . }} PostgreSQL is lagging by {{ "{{ $value }}" }} hour(s).
-    ##       summary: PostgreSQL replication is lagging by {{ "{{ $value }}" }} hour(s).
     rules: []
-
+      ## These are just examples rules, please adapt them to your needs.
+      ## Make sure to constraint the rules to the current postgresql service.
+      # - alert: HugeReplicationLag
+      #   expr: pg_replication_lag{service="{{ template "postgresql.fullname" . }}-metrics"} / 3600 > 1
+      #   for: 1m
+      #   labels:
+      #     severity: critical
+      #   annotations:
+      #     description: replication for {{ template "postgresql.fullname" . }} PostgreSQL is lagging by {{ "{{ $value }}" }} hour(s).
+      #     summary: PostgreSQL replication is lagging by {{ "{{ $value }}" }} hour(s).
   image:
     registry: docker.io
     repository: bitnami/postgres-exporter
-    tag: 0.8.0-debian-10-r125
+    tag: 0.8.0-debian-10-r28
     pullPolicy: IfNotPresent
     ## Optionally specify an array of imagePullSecrets.
     ## Secrets must be manually created in the namespace.
@@ -529,7 +487,7 @@ metrics:
   ## ref: https://github.com/wrouesnel/postgres_exporter#adding-new-metrics-via-a-config-file
   # customMetrics:
   #   pg_database:
-  #     query: "SELECT d.datname AS name, CASE WHEN pg_catalog.has_database_privilege(d.datname, 'CONNECT') THEN pg_catalog.pg_database_size(d.datname) ELSE 0 END AS size_bytes FROM pg_catalog.pg_database d where datname not in ('template0', 'template1', 'postgres')"
+  #     query: "SELECT d.datname AS name, CASE WHEN pg_catalog.has_database_privilege(d.datname, 'CONNECT') THEN pg_catalog.pg_database_size(d.datname) ELSE 0 END AS size FROM pg_catalog.pg_database d where datname not in ('template0', 'template1', 'postgres')"
   #     metrics:
   #       - name:
   #           usage: "LABEL"
@@ -537,15 +495,6 @@ metrics:
   #       - size_bytes:
   #           usage: "GAUGE"
   #           description: "Size of the database in bytes"
-  #
-  ## An array to add extra env vars to configure postgres-exporter
-  ## see: https://github.com/wrouesnel/postgres_exporter#environment-variables
-  ## For example:
-  #  extraEnvVars:
-  #  - name: PG_EXPORTER_DISABLE_DEFAULT_METRICS
-  #    value: "true"
-  extraEnvVars: {}
-
   ## Pod Security Context
   ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/
   ##
