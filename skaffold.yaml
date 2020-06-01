@@ -1,0 +1,12 @@
+apiVersion: skaffold/v2beta3
+kind: Config
+metadata:
+  name: springboot-sakila-jpa
+build:
+  artifacts:
+  - image: aballaci/springboot-sakila-jpa
+deploy:
+  kubectl:
+    manifests:
+    - persistent-volume.yml
+    - springboot-jpa.yaml

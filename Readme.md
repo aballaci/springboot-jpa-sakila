@@ -69,6 +69,12 @@ install the dashboard in grafana importing it from grafana_dashboard_spring-boot
 
 <code> kubectl apply -f springboot-jpa.yaml </code>
 
+or for local development
+
+```skaffold dev```
+
+to make the builds faster use a nexus docker image as proxy... more on that later...
+
 ```
 Metrics: http://localhost:8080/actuator/metrics
 

@@ -4,6 +4,8 @@ MAINTAINER Armand Ballaci
 
 COPY pom.xml .
 
+COPY settings.xml "/root/.m2/settings.xml"
+
 COPY src src
 
 RUN mvn dependency:go-offline -B
