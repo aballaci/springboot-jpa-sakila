@@ -50,17 +50,19 @@ Metrics: http://localhost:8080/actuator/metrics
 Metrics in prometheus format: http://localhost:8080/actuator/prometheus
 ```
 
-And repeat
+Grafana dashboard:
 
 ```
-until finished
+![screenshot](https://raw.github.com/aballaci/docs/img/grafana.png)
 ```
 
 End with an example of getting some data out of the system or using it for a little demo
 
 ## Running the tests
 
-Explain how to run the automated tests for this system
+load tests:
+
+![screenshot](https://raw.github.com/aballaci/docs/img/load_test_c4_100.png)
 
 ### Break down into end to end tests
 
