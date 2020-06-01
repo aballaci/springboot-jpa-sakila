@@ -52,9 +52,7 @@ Metrics in prometheus format: http://localhost:8080/actuator/prometheus
 
 Grafana dashboard:
 
-```
-![screenshot](https://raw.github.com/aballaci/docs/img/grafana.png)
-```
+![screenshot](https://github.com/aballaci/springboot-jpa-sakila/blob/master/docs/img/grafana.png)
 
 End with an example of getting some data out of the system or using it for a little demo
 
@@ -62,7 +60,7 @@ End with an example of getting some data out of the system or using it for a lit
 
 load tests:
 
-![screenshot](https://raw.github.com/aballaci/docs/img/load_test_c4_100.png)
+![screenshot](https://github.com/aballaci/springboot-jpa-sakila/blob/master/docs/img//load_test_c4_100.png)
 
 ### Break down into end to end tests
 
