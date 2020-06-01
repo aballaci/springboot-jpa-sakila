@@ -12,7 +12,7 @@ A Spring Cloud On Kubernetes Example
 
 * [SpringBoot](https://spring.io/projects/spring-boot) - The framework used
 * [Maven](https://maven.apache.org/) - Dependency Management
-* [Docker](https://www.docker.com/) - Used containerise the application
+* [Docker](https://www.docker.com/) - Used to containerise the application
 * [Kubernetes](https://kubernetes.io/) - Used to generate a scalable cloud microservice
 * [DB Documentation](https://www.ntu.edu.sg/home/ehchua/programming/sql/sampledatabases.html) - MySQL's Sample Salika (DVD Rental) Database
 
@@ -35,6 +35,11 @@ you can build your own version:
 ```docker build -t namespace/image-name:version .```
 
 ```docker push namespace/image-name:version```
+
+Set first the namespace in the current context -- the services should be installed in the same namespace.
+
+```kubectl config set-context --current --namespace=default```
+
 
 install prometheus: 
 
