@@ -130,10 +130,10 @@ postgresqlUsername: postgres
 ## PostgreSQL password
 ## ref: https://github.com/bitnami/bitnami-docker-postgresql/blob/master/README.md#setting-the-root-password-on-first-run
 ##
-# postgresqlPassword:
+postgresqlPassword: s3hfUNDagb
 
 ## PostgreSQL password using existing secret
-## existingSecret: secret
+# existingSecret: s3hfUNDagb
 
 ## Mount PostgreSQL secret as a file instead of passing environment variable
 # usePasswordFile: false
@@ -141,7 +141,7 @@ postgresqlUsername: postgres
 ## Create a database
 ## ref: https://github.com/bitnami/bitnami-docker-postgresql/blob/master/README.md#creating-a-database-on-first-run
 ##
-# postgresqlDatabase:
+## postgresqlDatabase: sakila
 
 ## PostgreSQL data dir
 ## ref: https://github.com/bitnami/bitnami-docker-postgresql/blob/master/README.md
@@ -248,14 +248,14 @@ ldap:
 ## PostgreSQL service configuration
 service:
   ## PosgresSQL service type
-  type: ClusterIP
+  type: NodePort
   # clusterIP: None
   port: 5432
 
   ## Specify the nodePort value for the LoadBalancer and NodePort service types.
   ## ref: https://kubernetes.io/docs/concepts/services-networking/service/#type-nodeport
   ##
-  # nodePort:
+  nodePort: 30432
 
   ## Provide any additional annotations which may be required. Evaluated as a template.
   ##
@@ -353,10 +353,15 @@ master:
 
   ## Additional PostgreSQL Master Volume mounts
   ##
-  extraVolumeMounts: []
-  ## Additional PostgreSQL Master Volumes
-  ##
-  extraVolumes: []
+  extraVolumeMounts:
+    - mountPath: /docker-entrypoint-initdb.d/
+      name: postgresql-initdb
+    ## Additional PostgreSQL Slave Volumes
+    ##
+  extraVolumes:
+    - name: postgresql-initdb
+      persistentVolumeClaim:
+        claimName: postgresql-initdb-pv-claim
   ## Add sidecars to the pod
   ##
   ## For example:

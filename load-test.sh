@@ -1,9 +1,14 @@
 #!/bin/bash
 
-for ((i=1;i<=100;i++)); do   curl --header "Connection: keep-alive" "http://localhost:30035/actors/"; done
+NODE_PORT=$(kubectl get --namespace default -o jsonpath="{.spec.ports[0].nodePort}" services springboot-jpa)
+echo $NODE_PORT
+APP_URL="http://localhost:${NODE_PORT}/actors/"
+
+echo "app_url: ${APP_URL}"
+#for ((i=1;i<=100;i++)); do   curl --header "Connection: keep-alive" ${APP_URL}; done
 
 max="${1:-10}"
-url="${2:'http://localhost:30035/actors/'}"
+url="${APP_URL}"
 date
 echo "url: $url
 rate: $max calls / second"

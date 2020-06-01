@@ -12,7 +12,7 @@ spec:
   accessModes:
     - ReadOnlyMany
   hostPath:
-    path: /host_mnt/c/develop/springboot-sakila-jpa/postgresql/init_db/sql
+    path: /host_mnt/c/develop/springboot-sakila-jpa/init_db/sql
 ---
 kind: PersistentVolumeClaim
 apiVersion: v1
