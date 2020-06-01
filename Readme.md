@@ -1,7 +1,7 @@
 # Spring Boot JPA 
 A Spring Cloud On Kubernetes Example 
  ###Features
- * micrometer (for gathering springboot )
+ * micrometer (for gathering metrics)
  * actuator 
  * Prometheus 
  * Grafana 
@@ -31,7 +31,7 @@ uses aballaci/springboot-sakila-jpa:v3 in Dockerhub
 
 you can build your own version:
 
-```docker build -t namespace/image-name:version```
+```docker build -t namespace/image-name:version .```
 
 ```docker push namespace/image-name:version```
 
@@ -79,10 +79,10 @@ Grafana dashboard:
 
 ![screenshot](https://github.com/aballaci/springboot-jpa-sakila/blob/master/docs/img//load_test_c4_100.png)
 
-* [Actors](http://localhost:31449/actors) - http://localhost:{port}/actors
-* [Films](http://localhost:31449/film) - http://localhost:{port}/film
-* [Actorinfo](http://localhost:31449/actorinfo) - http://localhost:{port}/actorinfo
-* [Custom Query](http://localhost:31449/actorinfo/search/findByActorsLastName?name=GUINESS) - http://localhost:{port}/actorinfo/search/findByActorsLastName?name=GUINESS
+* [Actors](http://localhost:8080/actors) - http://localhost:{port}/actors
+* [Films](http://localhost:8080/film) - http://localhost:{port}/film
+* [Actorinfo](http://localhost:8080/actorinfo) - http://localhost:{port}/actorinfo
+* [Custom Query](http://localhost:8080/actorinfo/search/findByActorsLastName?name=GUINESS) - http://localhost:{port}/actorinfo/search/findByActorsLastName?name=GUINESS
 
 ## Versioning
 
