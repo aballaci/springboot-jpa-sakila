@@ -1,6 +1,7 @@
 # Spring Boot JPA 
 A Spring Cloud On Kubernetes Example 
- ###Features
+
+###Features
  * micrometer (for gathering metrics)
  * actuator 
  * Prometheus 
