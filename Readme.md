@@ -16,18 +16,38 @@ These instructions will get you a copy of the project up and running on your loc
 
 ### Prerequisites
 
-What things you need to install the software and how to install them
+install prometheus: 
 
-```
-Give examples
-```
+```helm install prometheus ./prometheus```
+
+install the postgres persistent volumes that populate the database:
+
+```kubectl create -f persistent-volume.yml```
+
+install postgres
+
+``` helm install postgres postgresql/ ```
+
+install grafana:
+
+```helm upgrade grafana ./grafana/```
+
+create the prometheus datasource:
+
+url: ```http://prometheus-server```
+ 
+access: ``Server(default)``
+
+install the dashboard in grafana importing it from grafana_dashboard_spring-boot-statistics_rev2.json
 
 ### Installing
 
 <code> kubectl apply -f springboot-jpa.yaml </code>
 
 ```
-Give the example
+Metrics: http://localhost:8080/actuator/metrics
+
+Metrics in prometheus format: http://localhost:8080/actuator/prometheus
 ```
 
 And repeat
