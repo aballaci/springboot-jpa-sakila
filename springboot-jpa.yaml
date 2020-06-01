@@ -12,7 +12,7 @@ metadata:
   labels:
     app: springboot
 spec:
-  type: NodePort
+  type: LoadBalancer
   ports:
   - port: 8080
   selector:
