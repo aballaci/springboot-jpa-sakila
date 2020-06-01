@@ -1,5 +1,11 @@
 # Spring Boot JPA 
-A Spring Cloud Docker - Kubernetes Example
+A Spring Cloud On Kubernetes Example 
+ ###Features
+ * micrometer (for gathering springboot )
+ * actuator 
+ * Prometheus 
+ * Grafana 
+ * Postgresql Sakila DB
 
 ## Built With
 
@@ -12,9 +18,22 @@ A Spring Cloud Docker - Kubernetes Example
 
 ## Getting Started
 
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
+You will need:
 
+* Docker desktop
+* Docker-Kubernetes or Minikube (Kubernetes Dashboard or similar)
+* [Helm 3](https://helm.sh/docs/intro/install/)
+* [kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl/)
+* superbenchmarker ```choco install superbenchmarker```
 ### Prerequisites
+
+uses aballaci/springboot-sakila-jpa:v3 in Dockerhub
+
+you can build your own version:
+
+```docker build -t namespace/image-name:version```
+
+```docker push namespace/image-name:version```
 
 install prometheus: 
 
@@ -54,36 +73,16 @@ Grafana dashboard:
 
 ![screenshot](https://github.com/aballaci/springboot-jpa-sakila/blob/master/docs/img/grafana.png)
 
-End with an example of getting some data out of the system or using it for a little demo
-
 ## Running the tests
 
-load tests:
+`Run the load tests: ```sh load-test.sh```
 
 ![screenshot](https://github.com/aballaci/springboot-jpa-sakila/blob/master/docs/img//load_test_c4_100.png)
-
-### Break down into end to end tests
-
-Explain what these tests test and why
-
 
 * [Actors](http://localhost:31449/actors) - http://localhost:{port}/actors
 * [Films](http://localhost:31449/film) - http://localhost:{port}/film
 * [Actorinfo](http://localhost:31449/actorinfo) - http://localhost:{port}/actorinfo
 * [Custom Query](http://localhost:31449/actorinfo/search/findByActorsLastName?name=GUINESS) - http://localhost:{port}/actorinfo/search/findByActorsLastName?name=GUINESS
-
-### And coding style tests
-
-Explain what these tests test and why
-
-```
-Give an example
-```
-
-## Deployment
-
-Add additional notes about how to deploy this on a live system
-
 
 ## Versioning
 
@@ -96,9 +95,3 @@ I use [SemVer](http://semver.org/) for versioning. For the versions available, s
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE.md](Licence.md) file for details
-
-## Acknowledgments
-
-* Hat tip to anyone whose code was used
-* Inspiration
-* etc
