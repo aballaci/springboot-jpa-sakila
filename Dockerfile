@@ -8,8 +8,6 @@ COPY settings.xml "/root/.m2/settings.xml"
 
 COPY src src
 
-RUN mvn dependency:go-offline -B
-
 RUN mvn clean package -DskipTests
 
 RUN mkdir -p target/dependency && (cd target/dependency; jar -xf ../*.jar)
@@ -26,4 +24,4 @@ COPY --from=MAVEN_BUILD ${DEPENDENCY}/BOOT-INF/lib /app/lib
 COPY --from=MAVEN_BUILD ${DEPENDENCY}/META-INF /app/META-INF
 COPY --from=MAVEN_BUILD ${DEPENDENCY}/BOOT-INF/classes /app
 EXPOSE 8080
-ENTRYPOINT ["java","-cp","app:app/lib/*","de.ballaci.jpa.SakilaApplication"]
+ENTRYPOINT ["java","-cp","app:app/lib/*","de.ballaci.SakilaApplication"]
