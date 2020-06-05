@@ -14,7 +14,8 @@ metadata:
 spec:
   type: LoadBalancer
   ports:
-  - port: 8080
+    - port: 8080
+      name: http
   selector:
     app: springboot
 ---
@@ -34,7 +35,23 @@ spec:
     spec:
       containers:
       - name: springboot-jpa
-        image: aballaci/springboot-sakila-jpa:v3
+        image: aballaci/springboot-sakila-jpa:v4
+        readinessProbe:
+          httpGet:
+            path: /actuator/health
+            port: 8080
+          initialDelaySeconds: 10
+          timeoutSeconds: 2
+          periodSeconds: 3
+          failureThreshold: 1
+        livenessProbe:
+          httpGet:
+            path: /actuator/health
+            port: 8080
+          initialDelaySeconds: 20
+          timeoutSeconds: 2
+          periodSeconds: 8
+          failureThreshold: 1
         resources:
           requests:
             cpu: 100m
@@ -46,6 +63,10 @@ spec:
             value: "postgres"
           - name: PGSQL_PORT
             value: "5432"
+          - name: INSTANCE_NAME
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.name
           - name: PGSQL_PASSWORD
             valueFrom:
                 secretKeyRef:
